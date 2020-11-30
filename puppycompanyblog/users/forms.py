@@ -15,7 +15,7 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     email = StringField("Email: ", validators = [DataRequired(), Email()])
     username = StringField("Uername: ", validators = [DataRequired()])
-    password = PasswordField("Password: ", validartors = [DataRequired(), EqualTo("pass_confirm", message = "Passwords must match!")])
+    password = PasswordField("Password: ", validators = [DataRequired(), EqualTo("pass_confirm", message = "Passwords must match!")])
     pass_confirm = PasswordField("Confirm Password: ", validators = [DataRequired()])
     submit = SubmitField("Register")
 
@@ -28,7 +28,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("Your username has been registered already!")
 
 class UpdateUserForm(FlaskForm):
-    email = StringField("Email: ", vlaidators = [DataRequired(), Email()])
+    email = StringField("Email: ", validators = [DataRequired(), Email()])
     username = StringField("Username: ", validators = [DataRequired()])
     picture = FileField("Update Profile Picture", validators = [FileAllowed("jpg", "png")])        
     submit = SubmitField("Update")

@@ -3,15 +3,18 @@ from flask_login import login_user, current_user, logout_user, login_required
 from puppycompanyblog import db
 from puppycompanyblog.models import User, BlogPost
 from puppycompanyblog.users.forms import RegistrationForm, LoginForm, UpdateUserForm
-from puppycompanyblog.uses.pic_handler import add_profile_pic
+from puppycompanyblog.users.picture_handler import add_profile_pic
 
 users = Blueprint("users", __name__)
 
-@users.route("register", methods = ["GET", "POST"])
+@users.route("/register", methods = ["GET", "POST"])
 def register():
     form  = RegistrationForm()
 
+    print("reg")
+
     if form.validate_on_submit():
+        print("registering")
         user = User(email = form.email.data, username = form.username.data, password = form.password.data)
 
         db.session.add(user)
@@ -23,12 +26,12 @@ def register():
 
     return render_template("register.html", form = form)    
 
-@users.route("login", methods = ["GET", "POST"])
+@users.route("/login", methods = ["GET", "POST"])
 def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = User.quer.filter_by(email = form.emeil.data).first()
+        user = User.query.filter_by(email = form.email.data).first()
 
         if user.check_password(form.password.data) and user is not None:
             login_user(user)
